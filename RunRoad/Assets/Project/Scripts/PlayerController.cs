@@ -8,16 +8,23 @@ public class PlayerController : MonoBehaviour
 {
     private Vector2 curMovement;
     private Rigidbody rb;
+    public GameObject EndPanel;
+    private Animator animator;
+    Coroutine DieMotion;
 
     public float speed;
-
-    private Animator animator;
+    private bool Stay;
 
     private void Awake()
     {
         speed = 2.5f;
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+    }
+    private void Start()
+    {
+        Stay = true;
+        animator.SetBool("Stay", Stay);
     }
 
     private void Update()
@@ -34,11 +41,16 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Move();
+        if (Stay == true)
+        {
+            Move();
+        }
     }
 
+    #region player Move
     public void Onmove(InputAction.CallbackContext context)
     {
+        
         if (context.phase == InputActionPhase.Performed)
         {
             curMovement = context.ReadValue<Vector2>();
@@ -56,4 +68,24 @@ public class PlayerController : MonoBehaviour
 
         rb.velocity = dir;
     }
+    #endregion
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Object") 
+        {
+            DieMotion = StartCoroutine(DieAnimation());
+        }
+    }
+
+    IEnumerator DieAnimation()
+    {
+        Stay = false;
+        animator.SetBool("Stay", Stay);
+        EndPanel.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        Time.timeScale = 0f;
+        yield return null;
+    }
+
 }

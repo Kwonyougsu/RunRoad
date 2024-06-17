@@ -46,12 +46,10 @@ public class CarController : MonoBehaviour
 
             Destroy(collision.gameObject);
             Destroy(gameObject);
-            
         }
-        else
+        else if (collision.gameObject.CompareTag("Player"))
         {
-
+            moveDirection = Vector2.zero;
         }
-
     }
 }
