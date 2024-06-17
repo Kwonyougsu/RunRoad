@@ -5,7 +5,8 @@ public class CarController : MonoBehaviour
     private float speed; // 자동차 속도
     private Vector3 moveDirection; // 이동 방향
     public GameObject explosionPrefab;
-
+    [SerializeField] private AudioClip invokeclip;
+    [SerializeField] private AudioClip breakclip;
     void Start()
     {
         // 초기 위치에 따라 이동 방향 설정
@@ -21,6 +22,11 @@ public class CarController : MonoBehaviour
             moveDirection = Vector3.right;
             
         }
+        if (invokeclip)
+        {
+            SoundManager.PlayClip(invokeclip); 
+        }
+
         speed = Random.Range(1f, 10f);
     }
 
@@ -32,7 +38,7 @@ public class CarController : MonoBehaviour
         if (moveDirection == Vector3.right && transform.position.x < -12f ||
             moveDirection == Vector3.right && transform.position.x > 10f)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 
@@ -44,8 +50,12 @@ public class CarController : MonoBehaviour
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
             Instantiate(explosionPrefab, collision.transform.position, Quaternion.identity);
 
+            if (breakclip)
+            {
+                SoundManager.PlayClip(breakclip);
+            }
             Destroy(collision.gameObject);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
         else if (collision.gameObject.CompareTag("Player"))
         {

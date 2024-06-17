@@ -441,6 +441,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 4008349315577261640, guid: 314b4051250e70c4d970cb5d40c95fbc, type: 3}
+  invokeclip: {fileID: 8300000, guid: 00b07be6451aa34438a8ddcda7746b3a, type: 3}
+  breakclip: {fileID: 8300000, guid: 8a7fa26e50c82d44780076ed8efe5d4b, type: 3}
 --- !u!65 &5285950023426034084
 BoxCollider:
   m_ObjectHideFlags: 0
