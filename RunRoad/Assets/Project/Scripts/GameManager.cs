@@ -3,6 +3,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    public MapManager mapManager;
 
     public ObjectPool objectpool;
     public Transform leftSpawnPoints; // 왼쪽 스폰 포인트
